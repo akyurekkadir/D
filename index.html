@@ -550,6 +550,74 @@
 
   @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
 
+  /* ===== HARRY POTTER MUMLARI ===== */
+  .candle{
+    position:fixed;pointer-events:none;z-index:2;
+    --s:1;
+    animation:candleFloat 7s ease-in-out infinite;
+    will-change:transform;
+  }
+  .candle .glow{
+    position:absolute;left:50%;top:-28px;
+    width:90px;height:90px;margin-left:-45px;
+    background:radial-gradient(circle, rgba(255,200,110,.35) 0%, rgba(255,180,80,.15) 30%, transparent 70%);
+    pointer-events:none;
+    animation:candleGlow 2.8s ease-in-out infinite;
+    filter:blur(3px);
+  }
+  .candle .body{
+    position:relative;
+    width:13px;height:58px;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.2) 0%, transparent 20%, transparent 75%, rgba(0,0,0,.3) 100%),
+      linear-gradient(180deg, #fff8e7 0%, #f6e4bd 50%, #e6cc94 100%);
+    border-radius:3px 3px 2px 2px;
+    box-shadow:
+      inset 0 -3px 4px rgba(120,80,30,.4),
+      0 0 25px rgba(255,210,130,.2);
+  }
+  .candle .body::before{
+    content:"";position:absolute;top:-2px;left:0;right:0;height:4px;
+    background:radial-gradient(ellipse at 50% 0%, #d9b870 0%, #8b5a2b 80%);
+    border-radius:50%;
+  }
+  .candle .wick{
+    position:absolute;top:-6px;left:50%;margin-left:-0.75px;
+    width:1.5px;height:5px;background:#2a1608;z-index:1;
+  }
+  .candle .flame{
+    position:absolute;top:-24px;left:50%;margin-left:-6px;
+    width:12px;height:22px;
+    transform-origin:50% 100%;
+    background:radial-gradient(ellipse at 50% 75%, #fffbe6 0%, #ffe488 25%, #ffa733 60%, #ff5a1f 85%, transparent 100%);
+    border-radius:50% 50% 38% 38% / 62% 62% 38% 38%;
+    filter:blur(.4px);
+    box-shadow:0 0 14px 2px rgba(255,170,60,.55);
+    animation:candleFlicker .12s ease-in-out infinite alternate;
+  }
+  .candle .flame::before{
+    content:"";position:absolute;inset:3px 2px 6px 2px;
+    background:radial-gradient(ellipse at 50% 80%, #ffe488 0%, #ff9933 60%, transparent 100%);
+    border-radius:50% 50% 40% 40% / 60% 60% 40% 40%;
+  }
+  .candle .flame::after{
+    content:"";position:absolute;inset:6px 4px 10px 4px;
+    background:radial-gradient(ellipse at 50% 70%, #6a8cff 0%, transparent 70%);
+    border-radius:50%;opacity:.4;
+  }
+  @keyframes candleFlicker{
+    0%  { transform:scale(1,1) rotate(-1.5deg); opacity:1 }
+    100%{ transform:scale(1.08,.95) rotate(1.5deg); opacity:.92 }
+  }
+  @keyframes candleFloat{
+    0%,100%{transform:scale(var(--s)) translateY(0) rotate(-1deg)}
+    50%   {transform:scale(var(--s)) translateY(-14px) rotate(1deg)}
+  }
+  @keyframes candleGlow{
+    0%,100%{opacity:.55}
+    50%   {opacity:1}
+  }
+
   @media (max-width:380px){
     .card-title{font-size:46px}
     main{padding:46px 18px 80px;gap:60px}
@@ -558,6 +626,32 @@
 </head>
 <body>
 <div class="stars"></div>
+
+<!-- ===== UÇAN MUMLAR ===== -->
+<div class="candle" style="left:6vw;top:8vh;--s:1">
+  <div class="glow"></div><div class="wick"></div><div class="flame"></div><div class="body"></div>
+</div>
+<div class="candle" style="right:5vw;top:14vh;--s:.85;animation-delay:1.2s">
+  <div class="glow"></div><div class="wick"></div><div class="flame"></div><div class="body"></div>
+</div>
+<div class="candle" style="left:4vw;top:38vh;--s:.9;animation-delay:2.4s">
+  <div class="glow"></div><div class="wick"></div><div class="flame"></div><div class="body"></div>
+</div>
+<div class="candle" style="right:7vw;top:44vh;--s:1.1;animation-delay:.7s">
+  <div class="glow"></div><div class="wick"></div><div class="flame"></div><div class="body"></div>
+</div>
+<div class="candle" style="left:8vw;top:68vh;--s:.8;animation-delay:3s">
+  <div class="glow"></div><div class="wick"></div><div class="flame"></div><div class="body"></div>
+</div>
+<div class="candle" style="right:4vw;top:74vh;--s:.95;animation-delay:1.8s">
+  <div class="glow"></div><div class="wick"></div><div class="flame"></div><div class="body"></div>
+</div>
+<div class="candle" style="left:50vw;top:4vh;--s:.75;animation-delay:2.1s">
+  <div class="glow"></div><div class="wick"></div><div class="flame"></div><div class="body"></div>
+</div>
+<div class="candle" style="left:42vw;top:92vh;--s:.85;animation-delay:.4s">
+  <div class="glow"></div><div class="wick"></div><div class="flame"></div><div class="body"></div>
+</div>
 
 <main>
   <header class="intro">
