@@ -909,39 +909,77 @@
     });
   }
 
+  // Premium SVG çiçek — inline, her örnek için benzersiz gradient id
+  let flowerIdCounter = 0;
+  const flowerPalettes = [
+    { light:'#fde4ec', mid:'#f2b8c6', dark:'#c94560', center:'#8b2a42' },
+    { light:'#fff4d6', mid:'#f6dfa8', dark:'#b88850', center:'#7a5a2e' },
+    { light:'#ffe2cc', mid:'#ffbf99', dark:'#c26f50', center:'#7a3d26' },
+    { light:'#ece0ff', mid:'#c8a8f0', dark:'#7a55a8', center:'#3e2a6a' },
+    { light:'#fff9ea', mid:'#f2d9a8', dark:'#c89b6a', center:'#6a4a22' },
+    { light:'#ffd9e8', mid:'#ea9ab8', dark:'#a63a62', center:'#5c1d34' },
+  ];
+
+  function makeFlowerSVG(p){
+    const id = 'fg' + (flowerIdCounter++);
+    const petals = [0,72,144,216,288].map(a =>
+      `<ellipse cx="30" cy="13" rx="8.5" ry="14" fill="url(#${id})" transform="rotate(${a} 30 30)"/>`
+    ).join('');
+    return `<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;filter:drop-shadow(0 2px 6px rgba(0,0,0,.35))">
+      <defs>
+        <radialGradient id="${id}" cx="50%" cy="80%" r="75%">
+          <stop offset="0%" stop-color="${p.light}"/>
+          <stop offset="55%" stop-color="${p.mid}"/>
+          <stop offset="100%" stop-color="${p.dark}"/>
+        </radialGradient>
+      </defs>
+      <g>${petals}
+        <circle cx="30" cy="30" r="6" fill="${p.center}"/>
+        <circle cx="30" cy="30" r="6" fill="url(#${id})" opacity=".5"/>
+        <circle cx="28.5" cy="28.5" r="2" fill="#fff" opacity=".55"/>
+      </g>
+    </svg>`;
+  }
+
   function flowerRain(){
-    const flowers = ['🌸','🌺','🌷','💮','🌼','❀'];
-    const total = 70;
+    const total = 90;
     let n = 0;
     const iv = setInterval(() => {
       if(n >= total){ clearInterval(iv); return; }
       for(let k=0;k<2;k++){
         const f = document.createElement('div');
+        const size = 22 + Math.random()*24;
         f.style.position='fixed';
-        f.style.top='-30px';
+        f.style.top='-60px';
         f.style.left=(Math.random()*100)+'vw';
-        f.style.fontSize=(18+Math.random()*16)+'px';
+        f.style.width = size+'px';
+        f.style.height = size+'px';
         f.style.pointerEvents='none';
         f.style.zIndex='45';
         f.style.willChange='transform,opacity';
-        f.textContent = flowers[Math.floor(Math.random()*flowers.length)];
+        f.innerHTML = makeFlowerSVG(flowerPalettes[Math.floor(Math.random()*flowerPalettes.length)]);
         document.body.appendChild(f);
-        const dx = (Math.random()-.5)*160;
-        const dy = window.innerHeight + 80;
-        const rot = (Math.random()-.5)*540;
-        const dur = 4500 + Math.random()*3000;
+
+        const dx = (Math.random()-.5)*180;
+        const dy = window.innerHeight + 140;
+        const rot = (Math.random()-.5)*720;
+        const dur = 5000 + Math.random()*3500;
+        const sway = 30 + Math.random()*30;
+
         f.animate(
           [
-            { transform:`translate(0,0) rotate(0deg)`, opacity:1 },
-            { transform:`translate(${dx*.5}px,${dy*.5}px) rotate(${rot*.5}deg)`, opacity:1, offset:.6 },
+            { transform:`translate(0,0) rotate(0deg)`, opacity:0 },
+            { transform:`translate(${dx*.2 - sway}px,${dy*.15}px) rotate(${rot*.2}deg)`, opacity:1, offset:.1 },
+            { transform:`translate(${dx*.5 + sway}px,${dy*.45}px) rotate(${rot*.5}deg)`, opacity:1, offset:.5 },
+            { transform:`translate(${dx*.85 - sway}px,${dy*.8}px) rotate(${rot*.85}deg)`, opacity:1, offset:.85 },
             { transform:`translate(${dx}px,${dy}px) rotate(${rot}deg)`, opacity:0 }
           ],
-          { duration:dur, easing:'cubic-bezier(.3,.4,.5,1)', fill:'forwards' }
+          { duration:dur, easing:'cubic-bezier(.35,.1,.5,1)', fill:'forwards' }
         );
         setTimeout(()=>f.remove(), dur+100);
       }
       n += 2;
-    }, 180);
+    }, 160);
   }
 
   function heartRain(){
