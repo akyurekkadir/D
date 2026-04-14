@@ -733,30 +733,19 @@
     }
   }
 
-  // Hareket eşikli tap — scroll ederken flip etmesin
-  let cDownX=0, cDownY=0, cDownT=0, cMoved=false;
-  const onDown = (e) => {
-    const t = e.touches ? e.touches[0] : e;
-    cDownX = t.clientX; cDownY = t.clientY;
-    cDownT = Date.now(); cMoved = false;
-  };
-  const onMove = (e) => {
-    const t = e.touches ? e.touches[0] : e;
-    if(Math.abs(t.clientX - cDownX) > 10 || Math.abs(t.clientY - cDownY) > 10){
-      cMoved = true;
+  // Desktop & mobil: plain click her zaman çalışır
+  // Mobilde scroll ederken click'in fire olmasını engellemek için
+  // touchmove ile "scrolled" flag'i tutup touchend'te click'i iptal ediyoruz.
+  let touchScrolled = false;
+  card.addEventListener('touchstart', () => { touchScrolled = false; }, {passive:true});
+  card.addEventListener('touchmove', () => { touchScrolled = true; }, {passive:true});
+  card.addEventListener('click', (e) => {
+    if(touchScrolled){
+      touchScrolled = false;
+      return; // scroll sonrası sentetik click — yoksay
     }
-  };
-  const onUp = (e) => {
-    if(cMoved) return;
-    if(Date.now() - cDownT > 500) return;
     toggleCard();
-  };
-  card.addEventListener('touchstart', onDown, {passive:true});
-  card.addEventListener('touchmove', onMove, {passive:true});
-  card.addEventListener('touchend', onUp);
-  card.addEventListener('mousedown', onDown);
-  card.addEventListener('mousemove', onMove);
-  card.addEventListener('mouseup', onUp);
+  });
 
   // ====== BENİ AFFEDER MİSİN ======
   const frame = document.getElementById('forgiveFrame');
