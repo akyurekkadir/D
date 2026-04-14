@@ -208,6 +208,21 @@
     -webkit-background-clip:text;background-clip:text;color:transparent;
     font-style:normal;letter-spacing:.3em;
   }
+  .celebration{
+    margin-top:26px;
+    font-family:'Parisienne',cursive;
+    font-size:clamp(28px,8vw,42px);
+    line-height:1.2;
+    background:linear-gradient(135deg,var(--gold-bright),var(--rose) 50%,var(--gold-bright));
+    background-size:200% 200%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 50px rgba(242,184,198,.3);
+    opacity:0;transform:translateY(20px) scale(.9);
+    transition:all 1.2s cubic-bezier(.2,.8,.2,1);
+    animation:shimmerText 5s ease-in-out infinite;
+    max-width:480px;margin-left:auto;margin-right:auto;
+  }
+  .celebration.show{opacity:1;transform:none}
 
   /* Section label */
   .section-label{text-align:center;margin-bottom:26px}
@@ -554,6 +569,7 @@
       <span class="c-h">23</span><span class="c-sep">:</span><span class="c-m">58</span><span class="c-sep">:</span><span class="c-s">00</span>
     </div>
     <div class="date-label" id="dateLabel">— 13 nisan · son dakikalar —</div>
+    <div class="celebration" id="celebration">Doğum günün kutlu olsun —<br>iyi ki varsın ♥</div>
   </header>
 
   <!-- ===== 1. KART ===== -->
@@ -579,7 +595,7 @@
             <p>Bu mektup senin için.</p>
             <p>Lisede önümdeki sıraya oturduğun için, seninle konuştuğum ve tanıştığım için kendimi çok şanslı hissediyorum. Ve ben genelde kendimi şanslı görmem.</p>
             <p>Görüşemesek bile paylaştığımız o kadar çok şey var ki hangi birini anlatsam bilemiyorum. İlerdeki hayallerim arasında sen de varsın. Hep hayal kurarken görüştüğümüz, konuştuğumuz, beraber bir şeyler yaptığımız anları düşünüyorum. Kendi evimin olmasını, senin gelmeni, beraber vakit geçirdiğimizi… Benim hayallerimde bu var. Ve onun için çabalıyorum, çabalıyoruz.</p>
-            <p>Son günlerde iyi değilim, bu iletişimimize de yansıdı — hiç istemesem de. Söylediğin her şeyi biliyorum, katılıyorum; sadece ailemdeki konumum itibarıyla üstümde ekstra bir sorumluluk hissediyorum. Sen olmasaydın üstesinden gelemezdim.</p>
+            <p>Son günlerde iyi değilim, bu iletişimimize de yansıdı — hiç istemesem de. Söylediğin her şeyi biliyorum, katılıyorum; sadece ailemdeki konumum itibarıyla üstümde ekstra bir sorumluluk hissediyorum. Sen olmasaydın üstesinden gelemem.</p>
             <p>Her zaman yanımda olduğun için çok teşekkür ederim. Ben de her zaman yanındayım.</p>
             <p>Şu an evrenimizde saat 23:59 ve ilk ben kutluyorum. Doğum günün kutlu olsun <span class="heart">♥</span></p>
           </div>
@@ -685,6 +701,8 @@
       dateLabel.textContent = '✦  zaman durdu · mutlu yıllar  ✦';
       confettiStorm();
       domeFill();
+      flowerRain();
+      document.getElementById('celebration').classList.add('show');
       if(navigator.vibrate) navigator.vibrate([40,60,40,60,140]);
       return;
     }
@@ -701,10 +719,11 @@
     burstConfetti(60);
   }
 
-  // ====== KART AÇMA ======
+  // ====== KART AÇMA (scroll'u bozmadan) ======
   const card = document.getElementById('card');
   const cardHint = document.getElementById('cardHint');
-  onTap(card, () => {
+
+  function toggleCard(){
     const opened = card.classList.toggle('open');
     if(opened){
       cardHint.textContent = '— tekrar dokun, kapat —';
@@ -712,7 +731,32 @@
     }else{
       cardHint.textContent = '— dokun, aç —';
     }
-  });
+  }
+
+  // Hareket eşikli tap — scroll ederken flip etmesin
+  let cDownX=0, cDownY=0, cDownT=0, cMoved=false;
+  const onDown = (e) => {
+    const t = e.touches ? e.touches[0] : e;
+    cDownX = t.clientX; cDownY = t.clientY;
+    cDownT = Date.now(); cMoved = false;
+  };
+  const onMove = (e) => {
+    const t = e.touches ? e.touches[0] : e;
+    if(Math.abs(t.clientX - cDownX) > 10 || Math.abs(t.clientY - cDownY) > 10){
+      cMoved = true;
+    }
+  };
+  const onUp = (e) => {
+    if(cMoved) return;
+    if(Date.now() - cDownT > 500) return;
+    toggleCard();
+  };
+  card.addEventListener('touchstart', onDown, {passive:true});
+  card.addEventListener('touchmove', onMove, {passive:true});
+  card.addEventListener('touchend', onUp);
+  card.addEventListener('mousedown', onDown);
+  card.addEventListener('mousemove', onMove);
+  card.addEventListener('mouseup', onUp);
 
   // ====== BENİ AFFEDER MİSİN ======
   const frame = document.getElementById('forgiveFrame');
@@ -885,6 +929,41 @@
       );
       setTimeout(()=>{ b.remove(); activeBalloons.delete(b); }, 650);
     });
+  }
+
+  function flowerRain(){
+    const flowers = ['🌸','🌺','🌷','💮','🌼','❀'];
+    const total = 70;
+    let n = 0;
+    const iv = setInterval(() => {
+      if(n >= total){ clearInterval(iv); return; }
+      for(let k=0;k<2;k++){
+        const f = document.createElement('div');
+        f.style.position='fixed';
+        f.style.top='-30px';
+        f.style.left=(Math.random()*100)+'vw';
+        f.style.fontSize=(18+Math.random()*16)+'px';
+        f.style.pointerEvents='none';
+        f.style.zIndex='45';
+        f.style.willChange='transform,opacity';
+        f.textContent = flowers[Math.floor(Math.random()*flowers.length)];
+        document.body.appendChild(f);
+        const dx = (Math.random()-.5)*160;
+        const dy = window.innerHeight + 80;
+        const rot = (Math.random()-.5)*540;
+        const dur = 4500 + Math.random()*3000;
+        f.animate(
+          [
+            { transform:`translate(0,0) rotate(0deg)`, opacity:1 },
+            { transform:`translate(${dx*.5}px,${dy*.5}px) rotate(${rot*.5}deg)`, opacity:1, offset:.6 },
+            { transform:`translate(${dx}px,${dy}px) rotate(${rot}deg)`, opacity:0 }
+          ],
+          { duration:dur, easing:'cubic-bezier(.3,.4,.5,1)', fill:'forwards' }
+        );
+        setTimeout(()=>f.remove(), dur+100);
+      }
+      n += 2;
+    }, 180);
   }
 
   function heartRain(){
