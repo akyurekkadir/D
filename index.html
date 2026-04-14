@@ -96,6 +96,79 @@
     text-shadow:0 0 40px rgba(232,200,140,.35);
     margin-left:4px;
   }
+  .universe-note{
+    max-width:440px;margin:18px auto 0;
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:15px;line-height:1.65;
+    color:var(--ink-dim);opacity:.85;
+    padding:16px 22px;
+    border-top:1px solid rgba(232,200,140,.2);
+    border-bottom:1px solid rgba(232,200,140,.2);
+  }
+  .universe-note .hl{
+    color:var(--gold-bright);font-style:normal;
+    background:linear-gradient(135deg,var(--gold-bright),var(--rose));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  /* ===== SONG GIFT ===== */
+  .song-wrap{
+    width:100%;
+    display:flex;flex-direction:column;align-items:center;
+    animation:fadeUp 1.6s .3s ease both;
+  }
+  .song-card{
+    width:100%;max-width:440px;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(242,184,198,.18), transparent 70%),
+      linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
+    border:1px solid rgba(232,200,140,.35);
+    border-radius:24px;
+    padding:32px 26px;
+    position:relative;
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:
+      0 30px 80px -30px rgba(0,0,0,.8),
+      0 0 50px rgba(242,184,198,.08) inset;
+    text-align:center;
+  }
+  .song-card::before,.song-card::after{
+    content:"♪";position:absolute;color:var(--rose);font-size:14px;opacity:.6;
+  }
+  .song-card::before{top:12px;left:18px}
+  .song-card::after{bottom:12px;right:18px}
+  .song-card .note{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:16px;opacity:.8;margin-bottom:18px;line-height:1.5;
+  }
+  .song-btn{
+    display:inline-flex;align-items:center;gap:12px;
+    font-family:'Cormorant Garamond',serif;font-weight:500;
+    font-size:15px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--bg-0);text-decoration:none;
+    background:linear-gradient(135deg,var(--gold-bright),var(--rose),var(--gold-bright));
+    background-size:200% 200%;
+    border-radius:999px;
+    padding:16px 30px;
+    box-shadow:
+      0 14px 34px -12px rgba(242,184,198,.7),
+      0 0 0 1px rgba(255,255,255,.35) inset;
+    animation:shimmer 4s ease-in-out infinite;
+    transition:transform .2s ease;
+  }
+  .song-btn:active{transform:scale(.95)}
+  .song-btn .ico{
+    display:inline-block;width:18px;height:18px;
+    background:var(--bg-0);border-radius:50%;
+    position:relative;
+  }
+  .song-btn .ico::after{
+    content:"";position:absolute;top:50%;left:55%;
+    transform:translate(-50%,-50%);
+    border:6px solid transparent;border-left-color:var(--gold-bright);
+    border-right:0;
+  }
 
   /* ===== BIG CLOCK ===== */
   .clock{
@@ -474,6 +547,9 @@
   <header class="intro">
     <div class="eyebrow">önsöz</div>
     <div class="welcome">Evrenimize hoş geldin<span class="name">Duygu</span></div>
+    <div class="universe-note">
+      bizim evrenimizde <span class="hl">endo</span> diye bir ders yok. ben evde kalıyorum ve sen <span class="hl">Victoria's Secret</span> modeli, diş hekimi müdüresi hanım olarak kendi kliniğini yönetiyorsun. aynı zamanda saatimiz dünyadan geride — yani şu an <span class="hl">13 nisan, 23:58</span>.
+    </div>
     <div class="clock" id="clock">
       <span class="c-h">23</span><span class="c-sep">:</span><span class="c-m">58</span><span class="c-sep">:</span><span class="c-s">00</span>
     </div>
@@ -530,6 +606,21 @@
         <button class="f-btn no-btn" id="noBtn">Affetmedim</button>
       </div>
       <div class="thank-you" id="thankYou">teşekkür ederim ♥</div>
+    </div>
+  </section>
+
+  <!-- ===== 3. ŞARKI ===== -->
+  <section class="song-wrap">
+    <div class="section-label">
+      <div class="num">— iii —</div>
+      <h2>Sana Bir Şarkı</h2>
+      <div class="deco"><span></span><span></span></div>
+    </div>
+    <div class="song-card">
+      <div class="note">sana bir şarkı armağan ediyorum —<br>bu gece senin için çalsın.</div>
+      <a class="song-btn" href="https://www.youtube.com/watch?v=VtJtCj8TNJU&list=RDVtJtCj8TNJU&start_radio=1" target="_blank" rel="noopener">
+        <span class="ico"></span> dinle
+      </a>
     </div>
   </section>
 
