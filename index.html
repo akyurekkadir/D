@@ -733,19 +733,7 @@
     }
   }
 
-  // Desktop & mobil: plain click her zaman çalışır
-  // Mobilde scroll ederken click'in fire olmasını engellemek için
-  // touchmove ile "scrolled" flag'i tutup touchend'te click'i iptal ediyoruz.
-  let touchScrolled = false;
-  card.addEventListener('touchstart', () => { touchScrolled = false; }, {passive:true});
-  card.addEventListener('touchmove', () => { touchScrolled = true; }, {passive:true});
-  card.addEventListener('click', (e) => {
-    if(touchScrolled){
-      touchScrolled = false;
-      return; // scroll sonrası sentetik click — yoksay
-    }
-    toggleCard();
-  });
+  card.addEventListener('click', toggleCard);
 
   // ====== BENİ AFFEDER MİSİN ======
   const frame = document.getElementById('forgiveFrame');
