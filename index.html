@@ -550,6 +550,164 @@
 
   @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
 
+  /* ===== PASTA ===== */
+  .cake-wrap{
+    width:100%;display:flex;flex-direction:column;align-items:center;
+    animation:fadeUp 1.6s .3s ease both;
+  }
+  .cake-frame{
+    width:100%;max-width:440px;
+    padding:36px 24px 32px;
+    border-radius:24px;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(242,184,198,.2), transparent 70%),
+      linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
+    border:1px solid rgba(232,200,140,.35);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.8), 0 0 50px rgba(242,184,198,.08) inset;
+    text-align:center;position:relative;
+  }
+  .cake-frame::before,.cake-frame::after{
+    content:"✦";position:absolute;color:var(--gold);font-size:11px;opacity:.7;
+  }
+  .cake-frame::before{top:12px;left:16px}
+  .cake-frame::after{bottom:12px;right:16px}
+
+  .cake-stage{
+    height:290px;position:relative;
+    display:flex;align-items:flex-end;justify-content:center;
+    margin-bottom:22px;
+  }
+  .cake{
+    position:relative;
+    width:min(260px,72vw);
+    filter:drop-shadow(0 25px 35px rgba(0,0,0,.5));
+  }
+  .plate{
+    position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);
+    width:110%;height:14px;
+    background:radial-gradient(ellipse at 50% 30%, #e8d8b8 0%, #b8966a 80%, #6a4a22 100%);
+    border-radius:50%;
+    box-shadow:0 6px 16px rgba(0,0,0,.5), inset 0 2px 4px rgba(255,255,255,.3);
+  }
+  .tier{
+    position:relative;margin:0 auto;
+    border-radius:6px 6px 10px 10px;
+    box-shadow:inset 0 -10px 18px rgba(0,0,0,.2), inset 0 2px 4px rgba(255,255,255,.3);
+  }
+  .tier::after{
+    content:"";position:absolute;top:-3px;left:-4px;right:-4px;height:14px;
+    background:linear-gradient(180deg, #fff8ec 0%, #f6e4bd 100%);
+    border-radius:50% 50% 12px 12px / 80% 80% 12px 12px;
+    box-shadow:0 4px 6px rgba(0,0,0,.25), inset 0 2px 3px rgba(255,255,255,.6);
+  }
+  .tier.base{
+    width:100%;height:74px;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.18) 0 2px, transparent 2px 14px),
+      linear-gradient(180deg, #ffdce4 0%, #f2a8bc 60%, #d97fa0 100%);
+  }
+  .tier.mid{
+    width:78%;height:62px;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.2) 0 2px, transparent 2px 12px),
+      linear-gradient(180deg, #fff4d4 0%, #f0d9a0 60%, #c8a060 100%);
+  }
+  .tier.top{
+    width:55%;height:52px;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.2) 0 2px, transparent 2px 10px),
+      linear-gradient(180deg, #f8d2dc 0%, #e8a8bc 60%, #c97a94 100%);
+  }
+  .tier .sprinkle{
+    position:absolute;width:3px;height:3px;border-radius:50%;
+    box-shadow:0 0 3px rgba(0,0,0,.3);
+  }
+
+  .cake-candles{
+    position:absolute;left:0;right:0;
+    bottom:calc(74px + 62px + 52px + 10px);
+    display:flex;justify-content:center;align-items:flex-end;
+    gap:10px;pointer-events:none;
+  }
+  .cc{
+    position:relative;width:7px;
+  }
+  .cc-body{
+    width:7px;height:34px;
+    background:linear-gradient(180deg, #fff8e7 0%, #f6e4bd 100%);
+    border-radius:2px;
+    box-shadow:inset -2px 0 3px rgba(0,0,0,.2);
+    position:relative;
+  }
+  .cc:nth-child(2) .cc-body{background:linear-gradient(180deg, #ffd4e0 0%, #e89ab0 100%)}
+  .cc:nth-child(3) .cc-body{background:linear-gradient(180deg, #d9e8ff 0%, #9ab8e8 100%)}
+  .cc:nth-child(4) .cc-body{background:linear-gradient(180deg, #fff0b8 0%, #e8c868 100%)}
+  .cc:nth-child(5) .cc-body{background:linear-gradient(180deg, #e0d4ff 0%, #a898e8 100%)}
+  .cc-wick{
+    position:absolute;top:-5px;left:50%;margin-left:-0.75px;
+    width:1.5px;height:4px;background:#2a1608;
+  }
+  .cc-flame{
+    position:absolute;top:-20px;left:50%;margin-left:-5px;
+    width:10px;height:18px;
+    background:radial-gradient(ellipse at 50% 75%, #fffbe6 0%, #ffe488 25%, #ffa733 60%, #ff5a1f 85%, transparent 100%);
+    border-radius:50% 50% 38% 38% / 62% 62% 38% 38%;
+    filter:blur(.3px);
+    box-shadow:0 0 12px 2px rgba(255,170,60,.6);
+    transform-origin:50% 100%;
+    animation:ccFlicker .13s ease-in-out infinite alternate;
+    transition:opacity 1.2s ease, transform 1.2s ease;
+  }
+  @keyframes ccFlicker{
+    0%  {transform:scale(1,1) rotate(-2deg)}
+    100%{transform:scale(1.1,.93) rotate(2deg)}
+  }
+  .cake.blown .cc-flame{
+    opacity:0;transform:scale(.3) translateY(-6px);
+    animation:none;
+  }
+  .smoke{
+    position:absolute;top:-22px;left:50%;margin-left:-5px;
+    width:10px;height:10px;border-radius:50%;
+    background:radial-gradient(circle,rgba(220,220,220,.7) 0%, rgba(180,180,180,.3) 50%, transparent 80%);
+    opacity:0;pointer-events:none;
+  }
+  .cake.blown .smoke{
+    animation:smokeRise 2.4s ease-out forwards;
+  }
+  @keyframes smokeRise{
+    0%{opacity:0;transform:translateY(0) scale(.5)}
+    20%{opacity:.8}
+    100%{opacity:0;transform:translateY(-60px) scale(2)}
+  }
+
+  .cake-btn{
+    display:inline-flex;align-items:center;gap:12px;
+    font-family:'Cormorant Garamond',serif;font-weight:500;
+    font-size:14px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--bg-0);border:none;cursor:pointer;
+    background:linear-gradient(135deg,var(--gold-bright),var(--rose),var(--gold-bright));
+    background-size:200% 200%;
+    border-radius:999px;
+    padding:16px 28px;
+    box-shadow:0 14px 34px -12px rgba(232,200,140,.7), 0 0 0 1px rgba(255,255,255,.35) inset;
+    animation:shimmer 4s ease-in-out infinite;
+    transition:transform .2s ease, opacity .6s ease;
+  }
+  .cake-btn:active{transform:scale(.95)}
+  .cake-btn.done{opacity:.4;pointer-events:none}
+  .wish-note{
+    margin-top:16px;font-family:'Parisienne',cursive;
+    font-size:26px;
+    background:linear-gradient(135deg,var(--gold-bright),var(--rose),var(--gold-bright));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    opacity:0;transform:translateY(10px);
+    transition:all 1s ease;
+  }
+  .wish-note.show{opacity:1;transform:none}
+
   /* ===== HARRY POTTER MUMLARI ===== */
   .candle{
     position:fixed;pointer-events:none;z-index:2;
@@ -703,10 +861,38 @@
     </div>
   </section>
 
-  <!-- ===== 2. AFFET ===== -->
-  <section class="forgive-wrap">
+  <!-- ===== 2. PASTA ===== -->
+  <section class="cake-wrap">
     <div class="section-label">
       <div class="num">— ii —</div>
+      <h2>Dilek Tut</h2>
+      <div class="deco"><span></span><span></span></div>
+    </div>
+    <div class="cake-frame">
+      <div class="cake-stage">
+        <div class="cake" id="cake">
+          <div class="cake-candles">
+            <div class="cc"><div class="cc-flame"></div><div class="smoke"></div><div class="cc-wick"></div><div class="cc-body"></div></div>
+            <div class="cc"><div class="cc-flame"></div><div class="smoke"></div><div class="cc-wick"></div><div class="cc-body"></div></div>
+            <div class="cc"><div class="cc-flame"></div><div class="smoke"></div><div class="cc-wick"></div><div class="cc-body"></div></div>
+            <div class="cc"><div class="cc-flame"></div><div class="smoke"></div><div class="cc-wick"></div><div class="cc-body"></div></div>
+            <div class="cc"><div class="cc-flame"></div><div class="smoke"></div><div class="cc-wick"></div><div class="cc-body"></div></div>
+          </div>
+          <div class="tier top"></div>
+          <div class="tier mid"></div>
+          <div class="tier base"></div>
+          <div class="plate"></div>
+        </div>
+      </div>
+      <button class="cake-btn" id="cakeBtn">Hadi bir dilek tut ve üfle</button>
+      <div class="wish-note" id="wishNote">dileğin kabul olsun ♥</div>
+    </div>
+  </section>
+
+  <!-- ===== 3. AFFET ===== -->
+  <section class="forgive-wrap">
+    <div class="section-label">
+      <div class="num">— iii —</div>
       <h2>Küçük Bir Soru</h2>
       <div class="deco"><span></span><span></span></div>
     </div>
@@ -720,10 +906,10 @@
     </div>
   </section>
 
-  <!-- ===== 3. ŞARKI ===== -->
+  <!-- ===== 4. ŞARKI ===== -->
   <section class="song-wrap">
     <div class="section-label">
-      <div class="num">— iii —</div>
+      <div class="num">— iv —</div>
       <h2>Sana Bir Şarkı</h2>
       <div class="deco"><span></span><span></span></div>
     </div>
@@ -829,6 +1015,20 @@
   }
 
   card.addEventListener('click', toggleCard);
+
+  // ====== PASTA / DİLEK ======
+  const cake = document.getElementById('cake');
+  const cakeBtn = document.getElementById('cakeBtn');
+  const wishNote = document.getElementById('wishNote');
+  cakeBtn.addEventListener('click', () => {
+    if(cake.classList.contains('blown')) return;
+    cake.classList.add('blown');
+    cakeBtn.classList.add('done');
+    cakeBtn.textContent = 'dileğin uçtu ✦';
+    setTimeout(()=> wishNote.classList.add('show'), 800);
+    burstConfetti(30);
+    if(navigator.vibrate) navigator.vibrate([20,40,20]);
+  });
 
   // ====== BENİ AFFEDER MİSİN ======
   const frame = document.getElementById('forgiveFrame');
